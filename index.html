@@ -3,82 +3,215 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASSIST'Mat</title>
+  <title>Assist'Mat</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f6f7fb;
-      color: #1f2937;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+    :root{
+      --bg:#f7f4ef;
+      --card:#ffffff;
+      --soft:#faf8f4;
+      --text:#3f372f;
+      --muted:#6c645c;
+      --line:#d6cfc5;
+      --line-strong:#c9c0b4;
+      --accent:#8c6f4e;
+      --accent-soft:#f1eee8;
+      --shadow:0 10px 24px rgba(0,0,0,.08);
+      --radius:20px;
+      --radius-sm:14px;
     }
 
-    .container {
-      width: 100%;
-      max-width: 420px;
-      padding: 24px;
-      box-sizing: border-box;
-      text-align: center;
+    *{
+      box-sizing:border-box;
     }
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 28px 22px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
     }
 
-    h1 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 2rem;
+    .app-masthead{
+      padding:12px 16px 6px;
+      text-align:center;
     }
 
-    p {
-      margin-bottom: 24px;
-      color: #4b5563;
-      line-height: 1.5;
+    .app-title{
+      font-size:1.18rem;
+      font-weight:800;
+      letter-spacing:.01em;
+      color:var(--text);
+      line-height:1.15;
     }
 
-    .btn {
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
-      text-decoration: none;
-      background: #6366f1;
-      color: white;
-      padding: 14px 18px;
-      border-radius: 12px;
-      margin-bottom: 14px;
-      font-weight: bold;
-      font-size: 1rem;
+    .app-version{
+      margin-top:3px;
+      font-size:.83rem;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.15;
     }
 
-    .btn.secondary {
-      background: #0f172a;
+    .app-credit{
+      margin-top:2px;
+      font-size:.73rem;
+      color:var(--muted);
+      font-weight:600;
+      line-height:1.15;
     }
 
-    .footer {
-      margin-top: 16px;
-      font-size: 0.9rem;
-      color: #6b7280;
+    .wrapper{
+      max-width:720px;
+      margin:0 auto;
+      padding:8px 14px 28px;
+    }
+
+    .home-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .home-head{
+      padding:16px 18px 12px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(to bottom, #fcfbf8 0%, #f7f4ef 100%);
+    }
+
+    .home-head h1{
+      margin:0;
+      font-size:1.05rem;
+      line-height:1.2;
+      color:var(--text);
+    }
+
+    .home-head p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:.94rem;
+      line-height:1.5;
+    }
+
+    .home-body{
+      padding:16px;
+      display:grid;
+      gap:12px;
+      background:var(--soft);
+    }
+
+    .tool-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .tool-card h2{
+      margin:0 0 6px;
+      font-size:1rem;
+      color:var(--text);
+    }
+
+    .tool-card p{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.45;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      min-height:44px;
+      padding:10px 16px;
+      border-radius:14px;
+      border:1.5px solid var(--line-strong);
+      background:var(--accent-soft);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:700;
+      box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    }
+
+    .btn:hover{
+      background:#ebe6df;
+    }
+
+    .btn-primary{
+      background:#ffffff;
+    }
+
+    .btn-primary:hover{
+      background:#faf8f4;
+    }
+
+    .home-footer{
+      padding:14px 16px 18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.82rem;
+      line-height:1.45;
+      background:#fff;
+      border-top:1px solid var(--line);
+    }
+
+    @media (min-width:700px){
+      .home-body{
+        grid-template-columns:1fr 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>ASSIST'Mat</h1>
-      <p>Plateforme d’outils pour les Assistants Maternels.</p>
 
-      <a class="btn" href="/assistmat/">Ouvrir ASSIST'Mat</a>
-      <a class="btn secondary" href="/simulateur/">Ouvrir le Simulateur</a>
+  <div class="app-masthead">
+    <div class="app-title">Assist'Mat</div>
+    <div class="app-version">Plateforme d’outils</div>
+    <div class="app-credit">Thierry Bigorne, assistant maternel depuis 2008</div>
+  </div>
 
-      <div class="footer">Version de démarrage en ligne</div>
+  <div class="wrapper">
+    <div class="home-card">
+
+      <div class="home-head">
+        <h1>Choisissez l’outil à ouvrir</h1>
+        <p>
+          Cette page d’accueil sert de point d’entrée vers les outils indépendants
+          de l’écosystème Assist'Mat.
+        </p>
+      </div>
+
+      <div class="home-body">
+        <div class="tool-card">
+          <h2>Assist'Mat</h2>
+          <p>
+            Accès à l’outil principal de gestion, de suivi quotidien et de travail
+            autour des enfants, contrats et données métier.
+          </p>
+          <a class="btn btn-primary" href="/assistmat/">Ouvrir Assist'Mat</a>
+        </div>
+
+        <div class="tool-card">
+          <h2>Assist'Mat Simulateur</h2>
+          <p>
+            Outil indépendant de simulation pour préparer une mensualisation,
+            tester plusieurs hypothèses et produire une fiche synthèse.
+          </p>
+          <a class="btn" href="/simulateur/">Ouvrir le Simulateur</a>
+        </div>
+      </div>
+
+      <div class="home-footer">
+        Base en ligne Vercel. L’identité visuelle est alignée sur le simulateur.
+      </div>
+
     </div>
   </div>
+
 </body>
 </html>
