@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ASSIST'Mat</title>
-
   <style>
     body {
       margin: 0;
@@ -20,23 +19,26 @@
       width: 100%;
       max-width: 420px;
       padding: 24px;
+      box-sizing: border-box;
     }
 
     .card {
       background: white;
       border-radius: 18px;
       padding: 28px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       text-align: center;
     }
 
     h1 {
       margin-top: 0;
+      color: #1f2937;
     }
 
     p {
       color: #4b5563;
       margin-bottom: 24px;
+      line-height: 1.5;
     }
 
     .btn {
@@ -53,24 +55,26 @@
     .btn.secondary {
       background: #0f172a;
     }
+
+    .back {
+      display: inline-block;
+      margin-top: 16px;
+      color: #4b5563;
+      text-decoration: none;
+    }
   </style>
 </head>
-
 <body>
-
   <div class="container">
     <div class="card">
-
       <h1>ASSIST'Mat</h1>
       <p>Gestion des enfants, contrats et suivi quotidien.</p>
 
       <a class="btn" href="#">Accéder à mes enfants</a>
       <a class="btn secondary" href="#">Créer une fiche enfant</a>
 
-      <a href="/" style="display:block;margin-top:20px;">← Retour accueil</a>
-
+      <a class="back" href="/">← Retour accueil</a>
     </div>
   </div>
-
 </body>
 </html>
