@@ -2,14 +2,147 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Simulateur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASSIST'Mat Simulateur</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f7fb;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    .wrapper {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 1.9rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      margin: 0 0 24px 0;
+      text-align: center;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    .section {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #fafafa;
+    }
+
+    .section h2 {
+      margin: 0 0 8px 0;
+      font-size: 1.05rem;
+    }
+
+    .section p {
+      margin: 0 0 14px 0;
+      color: #4b5563;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      text-decoration: none;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 13px 16px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .btn.secondary {
+      background: #6366f1;
+    }
+
+    .btn.light {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #4b5563;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 0.9rem;
+      color: #6b7280;
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
 </head>
 <body>
+  <div class="wrapper">
+    <div class="card">
+      <h1>ASSIST'Mat Simulateur</h1>
+      <p class="subtitle">
+        Outil de simulation pour préparer un contrat, tester une mensualisation
+        et convertir ensuite une simulation en fiche exploitable.
+      </p>
 
-  <h1>ASSIST'Mat Simulateur</h1>
-  <p>Outil de simulation (en construction)</p>
+      <div class="section">
+        <h2>Nouvelle simulation</h2>
+        <p>
+          Démarrer un nouveau calcul à partir des besoins d’une famille, sans
+          créer immédiatement une fiche enfant définitive.
+        </p>
+        <a class="btn secondary" href="#">Commencer</a>
+      </div>
 
-  <a href="/">Retour accueil</a>
+      <div class="section">
+        <h2>Reprendre une simulation</h2>
+        <p>
+          Retrouver une simulation déjà commencée pour la modifier, la comparer
+          ou la finaliser.
+        </p>
+        <a class="btn" href="#">Ouvrir mes simulations</a>
+      </div>
 
+      <div class="section">
+        <h2>Créer une fiche depuis une simulation</h2>
+        <p>
+          Préparer le passage d’une simulation validée vers ASSIST'Mat, sans
+          ressaisir toutes les informations.
+        </p>
+        <a class="btn light" href="#">Préparer le transfert</a>
+      </div>
+
+      <a class="back" href="/">← Retour accueil</a>
+
+      <div class="note">
+        Version de structure en ligne. Le moteur métier et les enregistrements
+        seront ajoutés ensuite.
+      </div>
+    </div>
+  </div>
 </body>
 </html>
