@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Urgence</title>
+  <title>Assist'Mat Plateforme</title>
   <style>
     :root {
-      --red: #d62828;
-      --red-dark: #b71c1c;
-      --bg: #f7f7f9;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
-      --radius: 18px;
+      --bg: #f3f0eb;
+      --card: #f8f7f5;
+      --border: #d5cec4;
+      --text: #3e3732;
+      --muted: #6e675f;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --danger: #d62828;
+      --danger-dark: #b71c1c;
     }
 
     * {
@@ -27,212 +30,215 @@
       color: var(--text);
     }
 
-    .wrap {
+    .page {
       max-width: 760px;
       margin: 0 auto;
-      padding: 22px 16px 40px;
+      padding: 28px 18px 40px;
     }
 
-    .top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 18px;
+    .hero {
+      text-align: center;
+      margin-bottom: 22px;
     }
 
-    .cross {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: var(--red);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      font-weight: 900;
-      flex: 0 0 auto;
-      box-shadow: var(--shadow);
-    }
-
-    h1 {
+    .hero h1 {
       margin: 0;
-      font-size: 28px;
-      color: var(--red);
-    }
-
-    .subtitle {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      margin-top: 18px;
-    }
-
-    .card h2 {
-      margin: 0 0 14px;
-      font-size: 20px;
-    }
-
-    .emergency-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .emergency-item {
-      background: #fff5f5;
-      border: 2px solid #ffd2d2;
-      border-radius: 16px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 120px;
-      justify-content: space-between;
-    }
-
-    .emergency-name {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .emergency-number {
-      font-size: 34px;
-      font-weight: 900;
-      color: var(--red);
-      line-height: 1;
-    }
-
-    .call-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 44px;
-      border-radius: 12px;
-      text-decoration: none;
-      background: var(--red);
-      color: #fff;
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .call-btn:hover {
-      background: var(--red-dark);
-    }
-
-    .assistmat-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 54px;
-      border-radius: 14px;
-      text-decoration: none;
-      background: var(--red);
-      color: #fff;
+      font-size: 2.3rem;
+      line-height: 1.05;
       font-weight: 800;
-      font-size: 16px;
-      margin-top: 10px;
     }
 
-    .assistmat-btn:hover {
-      background: var(--red-dark);
-    }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 18px;
-      color: var(--red);
-      text-decoration: none;
+    .hero h2 {
+      margin: 4px 0 6px;
+      font-size: 1.1rem;
       font-weight: 700;
     }
 
-    .note {
-      margin-top: 10px;
+    .hero p {
+      margin: 0;
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
+      font-size: 1rem;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-header {
+      padding: 28px 28px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-header h3 {
+      margin: 0 0 14px;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .panel-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .tools {
+      padding: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .tool-card {
+      background: #fcfcfc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .tool-card h4 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .tool-card p {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
+    .tool-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 64px;
+      width: 100%;
+      background: #f4f1ec;
+      border: 2px solid #cfc6b9;
+      border-radius: 24px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 800;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), var(--shadow);
+    }
+
+    .tool-btn:hover {
+      background: #efebe5;
+    }
+
+    .panel-footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.35;
+    }
+
+    .btn-urgence-home {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: var(--danger);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+    }
+
+    .btn-urgence-home:hover {
+      background: var(--danger-dark);
+    }
+
+    .btn-urgence-cross {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--danger);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    .btn-urgence-label {
+      font-size: 15px;
+      letter-spacing: 0.2px;
     }
 
     @media (max-width: 640px) {
-      .emergency-grid {
-        grid-template-columns: 1fr;
+      .page {
+        padding: 24px 14px 40px;
       }
 
-      h1 {
-        font-size: 24px;
+      .hero h1 {
+        font-size: 2rem;
       }
 
-      .emergency-number {
-        font-size: 30px;
+      .panel-header,
+      .tool-card {
+        padding: 20px;
+      }
+
+      .tool-btn {
+        min-height: 60px;
       }
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <div class="top">
-      <div class="cross">✚</div>
-      <div>
-        <h1>Urgence</h1>
-        <p class="subtitle">Accès immédiat aux numéros principaux puis ouverture de l’outil urgence AssistMat</p>
+  <main class="page">
+    <header class="hero">
+      <h1>Assist'Mat</h1>
+      <h2>Plateforme d’outils</h2>
+      <p>Thierry Bigorne, assistant maternel depuis 2008</p>
+    </header>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h3>Choisissez l’outil à ouvrir</h3>
+        <p>Point d’entrée vers les outils indépendants Assist'Mat.</p>
       </div>
-    </div>
 
-    <section class="card">
-      <h2>Numéros d’urgence immédiats</h2>
-
-      <div class="emergency-grid">
-        <article class="emergency-item">
-          <div class="emergency-name">SAMU</div>
-          <div class="emergency-number">15</div>
-          <a class="call-btn" href="tel:15">Appeler le 15</a>
+      <div class="tools">
+        <article class="tool-card">
+          <h4>Assist'Mat</h4>
+          <p>Gestion des enfants, contrats et suivi quotidien.</p>
+          <a class="tool-btn" href="/assistmat/">Ouvrir Assist'Mat</a>
         </article>
 
-        <article class="emergency-item">
-          <div class="emergency-name">Police</div>
-          <div class="emergency-number">17</div>
-          <a class="call-btn" href="tel:17">Appeler le 17</a>
-        </article>
-
-        <article class="emergency-item">
-          <div class="emergency-name">Pompiers</div>
-          <div class="emergency-number">18</div>
-          <a class="call-btn" href="tel:18">Appeler le 18</a>
-        </article>
-
-        <article class="emergency-item">
-          <div class="emergency-name">Urgence européenne</div>
-          <div class="emergency-number">112</div>
-          <a class="call-btn" href="tel:112">Appeler le 112</a>
+        <article class="tool-card">
+          <h4>Assist'Mat Simulateur</h4>
+          <p>Simulation de mensualisation et préparation de contrat.</p>
+          <a class="tool-btn" href="/simulateur/">Ouvrir le Simulateur</a>
         </article>
       </div>
+
+      <div class="panel-footer">
+        Version en ligne Vercel • Interface alignée avec le simulateur
+      </div>
     </section>
-
-    <section class="card">
-      <h2>Outil urgence AssistMat</h2>
-
-      <a
-        class="assistmat-btn"
-        href="https://REMPLACE-ICI-PAR-TON-URL-ASSISTMAT-URGENCE"
-      >
-        Ouvrir l’outil urgence AssistMat
-      </a>
-
-      <p class="note">
-        Remplace l’adresse ci-dessus par l’URL exacte de ta future page urgence dans AssistMat.
-      </p>
-    </section>
-
-    <a class="back-link" href="/">← Retour à l’accueil</a>
   </main>
+
+  <a href="/urgence/" class="btn-urgence-home" aria-label="Ouvrir la page urgence">
+    <span class="btn-urgence-cross">✚</span>
+    <span class="btn-urgence-label">Urgence</span>
+  </a>
 </body>
 </html>
