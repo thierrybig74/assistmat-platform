@@ -1,244 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assist'Mat Plateforme</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urgence | Assist'Mat</title>
+
   <style>
-    :root {
-      --bg: #f3f0eb;
-      --card: #f8f7f5;
-      --border: #d5cec4;
-      --text: #3e3732;
-      --muted: #6e675f;
-      --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 18px;
-      --danger: #d62828;
-      --danger-dark: #b71c1c;
+    :root{
+      --bg:#f7f4ef;
+      --card:#ffffff;
+      --soft:#faf8f4;
+      --text:#3f372f;
+      --muted:#6c645c;
+      --line:#d6cfc5;
+      --line-strong:#c9c0b4;
+      --shadow:0 10px 24px rgba(0,0,0,.08);
+      --radius:20px;
+      --urgence:#d62828;
+      --urgence-dark:#b71c1c;
     }
 
-    * {
-      box-sizing: border-box;
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+    .wrapper{
+      max-width:760px;
+      margin:0 auto;
+      padding:18px 14px 28px;
     }
 
-    .page {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 28px 18px 40px;
+    .topbar{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
     }
 
-    .hero {
-      text-align: center;
-      margin-bottom: 22px;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: 2.3rem;
-      line-height: 1.05;
-      font-weight: 800;
-    }
-
-    .hero h2 {
-      margin: 4px 0 6px;
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-
-    .hero p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1rem;
-    }
-
-    .panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .panel-header {
-      padding: 28px 28px 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .panel-header h3 {
-      margin: 0 0 14px;
-      font-size: 1.15rem;
-      font-weight: 800;
-    }
-
-    .panel-header p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.35;
-    }
-
-    .tools {
-      padding: 18px;
-      display: grid;
-      gap: 18px;
-    }
-
-    .tool-card {
-      background: #fcfcfc;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-    }
-
-    .tool-card h4 {
-      margin: 0 0 12px;
-      font-size: 1rem;
-      font-weight: 800;
-    }
-
-    .tool-card p {
-      margin: 0 0 22px;
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.3;
-    }
-
-    .tool-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 64px;
-      width: 100%;
-      background: #f4f1ec;
-      border: 2px solid #cfc6b9;
-      border-radius: 24px;
-      text-decoration: none;
-      color: var(--text);
-      font-size: 1rem;
-      font-weight: 800;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), var(--shadow);
-    }
-
-    .tool-btn:hover {
-      background: #efebe5;
-    }
-
-    .panel-footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 20px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.35;
-    }
-
-    .btn-urgence-home {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 18px;
-      border-radius: 999px;
-      background: var(--danger);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 800;
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
-      z-index: 9999;
-    }
-
-    .btn-urgence-home:hover {
-      background: var(--danger-dark);
-    }
-
-    .btn-urgence-cross {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #fff;
-      color: var(--danger);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: 900;
-      line-height: 1;
-      flex: 0 0 auto;
-    }
-
-    .btn-urgence-label {
-      font-size: 15px;
-      letter-spacing: 0.2px;
-    }
-
-    @media (max-width: 640px) {
-      .page {
-        padding: 24px 14px 40px;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .panel-header,
-      .tool-card {
-        padding: 20px;
-      }
-
-      .tool-btn {
-        min-height: 60px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <main class="page">
-    <header class="hero">
-      <h1>Assist'Mat</h1>
-      <h2>Plateforme d’outils</h2>
-      <p>Thierry Bigorne, assistant maternel depuis 2008</p>
-    </header>
-
-    <section class="panel">
-      <div class="panel-header">
-        <h3>Choisissez l’outil à ouvrir</h3>
-        <p>Point d’entrée vers les outils indépendants Assist'Mat.</p>
-      </div>
-
-      <div class="tools">
-        <article class="tool-card">
-          <h4>Assist'Mat</h4>
-          <p>Gestion des enfants, contrats et suivi quotidien.</p>
-          <a class="tool-btn" href="/assistmat/">Ouvrir Assist'Mat</a>
-        </article>
-
-        <article class="tool-card">
-          <h4>Assist'Mat Simulateur</h4>
-          <p>Simulation de mensualisation et préparation de contrat.</p>
-          <a class="tool-btn" href="/simulateur/">Ouvrir le Simulateur</a>
-        </article>
-      </div>
-
-      <div class="panel-footer">
-        Version en ligne Vercel • Interface alignée avec le simulateur
-      </div>
-    </section>
-  </main>
-
-  <a href="/urgence/" class="btn-urgence-home" aria-label="Ouvrir la page urgence">
-    <span class="btn-urgence-cross">✚</span>
-    <span class="btn-urgence-label">Urgence</span>
-  </a>
-</body>
-</html>
+    .cross{
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      background:var(--urgence);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      font-weight:900;
+      box-shadow:0 8px 20px rgba(0,0,0,.18);
+      flex:
