@@ -15,12 +15,17 @@
       --line:#d6cfc5;
       --line-strong:#c9c0b4;
       --shadow:0 10px 24px rgba(0,0,0,.08);
-      --radius:20px;
+      --radius-xl:22px;
+      --radius-lg:18px;
+      --radius-md:14px;
       --urgence:#d62828;
       --urgence-dark:#b71c1c;
+      --urgence-soft:#fff3f3;
     }
 
-    *{ box-sizing:border-box; }
+    *{
+      box-sizing:border-box;
+    }
 
     body{
       margin:0;
@@ -29,29 +34,415 @@
       color:var(--text);
     }
 
-    .wrapper{
+    .page{
       max-width:760px;
       margin:0 auto;
-      padding:18px 14px 28px;
+      padding:18px 14px 32px;
     }
 
-    .topbar{
-      display:flex;
-      align-items:center;
-      gap:12px;
+    .hero{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+      padding:18px;
       margin-bottom:14px;
     }
 
-    .cross{
-      width:52px;
-      height:52px;
+    .hero-top{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .hero-cross{
+      width:58px;
+      height:58px;
       border-radius:50%;
       background:var(--urgence);
       color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:28px;
+      font-size:30px;
       font-weight:900;
-      box-shadow:0 8px 20px rgba(0,0,0,.18);
-      flex:
+      flex:0 0 auto;
+      box-shadow:0 8px 20px rgba(214,40,40,.22);
+    }
+
+    .hero h1{
+      margin:0;
+      font-size:1.55rem;
+      line-height:1.1;
+      color:var(--urgence);
+    }
+
+    .hero p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:.96rem;
+      line-height:1.4;
+    }
+
+    .section{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      margin-bottom:14px;
+    }
+
+    .section-head{
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background:#f8f4ef;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:1.05rem;
+    }
+
+    .section-body{
+      padding:16px;
+      background:var(--soft);
+    }
+
+    .urg-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:12px;
+    }
+
+    .urg-card{
+      background:#fff;
+      border:1px solid #eadede;
+      border-radius:var(--radius-lg);
+      padding:14px;
+      min-height:150px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,.03);
+    }
+
+    .urg-card-top{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .urg-name{
+      font-size:1rem;
+      font-weight:800;
+    }
+
+    .urg-number{
+      font-size:2rem;
+      font-weight:900;
+      color:var(--urgence);
+      line-height:1;
+    }
+
+    .urg-note{
+      color:var(--muted);
+      font-size:.88rem;
+      line-height:1.3;
+    }
+
+    .btn-call,
+    .btn-main,
+    .btn-secondary{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      min-height:48px;
+      padding:10px 14px;
+      border-radius:var(--radius-md);
+      text-decoration:none;
+      font-weight:800;
+      transition:background .15s ease, transform .05s ease;
+    }
+
+    .btn-call{
+      background:var(--urgence);
+      color:#fff;
+      box-shadow:0 6px 16px rgba(214,40,40,.18);
+    }
+
+    .btn-call:hover{
+      background:var(--urgence-dark);
+    }
+
+    .btn-call:active,
+    .btn-main:active,
+    .btn-secondary:active{
+      transform:translateY(1px);
+    }
+
+    .util-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .util-row{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+
+    .util-main{
+      min-width:0;
+      flex:1;
+    }
+
+    .util-title{
+      margin:0 0 4px;
+      font-weight:800;
+      font-size:.98rem;
+    }
+
+    .util-sub{
+      margin:0;
+      color:var(--muted);
+      font-size:.9rem;
+      line-height:1.35;
+      word-break:break-word;
+    }
+
+    .util-action{
+      flex:0 0 auto;
+      min-width:110px;
+    }
+
+    .btn-main{
+      background:var(--urgence);
+      color:#fff;
+      box-shadow:0 8px 18px rgba(214,40,40,.16);
+    }
+
+    .btn-main:hover{
+      background:var(--urgence-dark);
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--text);
+      border:1.5px solid var(--line-strong);
+    }
+
+    .tool-box{
+      background:var(--urgence-soft);
+      border:1px solid #f2caca;
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .tool-box p{
+      margin:0 0 12px;
+      color:var(--muted);
+      line-height:1.4;
+      font-size:.94rem;
+    }
+
+    .footer-actions{
+      display:grid;
+      gap:10px;
+    }
+
+    @media (max-width:640px){
+      .urg-grid{
+        grid-template-columns:1fr;
+      }
+
+      .util-row{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .util-action{
+        min-width:0;
+        width:100%;
+      }
+
+      .hero-top{
+        align-items:flex-start;
+      }
+
+      .hero h1{
+        font-size:1.4rem;
+      }
+
+      .urg-number{
+        font-size:1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <section class="hero">
+      <div class="hero-top">
+        <div class="hero-cross">✚</div>
+        <div>
+          <h1>Urgence</h1>
+          <p>
+            Accès rapide aux numéros essentiels et futur point d’entrée vers l’outil urgence Assist'Mat.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Numéros d’urgence immédiats</h2>
+      </div>
+      <div class="section-body">
+        <div class="urg-grid">
+
+          <article class="urg-card">
+            <div class="urg-card-top">
+              <div class="urg-name">SAMU</div>
+              <div class="urg-number">15</div>
+              <div class="urg-note">Urgence médicale</div>
+            </div>
+            <a class="btn-call" href="tel:15">Appeler le 15</a>
+          </article>
+
+          <article class="urg-card">
+            <div class="urg-card-top">
+              <div class="urg-name">Police</div>
+              <div class="urg-number">17</div>
+              <div class="urg-note">Urgence sécurité</div>
+            </div>
+            <a class="btn-call" href="tel:17">Appeler le 17</a>
+          </article>
+
+          <article class="urg-card">
+            <div class="urg-card-top">
+              <div class="urg-name">Pompiers</div>
+              <div class="urg-number">18</div>
+              <div class="urg-note">Incendie ou secours</div>
+            </div>
+            <a class="btn-call" href="tel:18">Appeler le 18</a>
+          </article>
+
+          <article class="urg-card">
+            <div class="urg-card-top">
+              <div class="urg-name">Urgence européenne</div>
+              <div class="urg-number">112</div>
+              <div class="urg-note">Depuis tout téléphone</div>
+            </div>
+            <a class="btn-call" href="tel:112">Appeler le 112</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Autres numéros utiles</h2>
+      </div>
+      <div class="section-body">
+        <div class="util-list">
+
+          <div class="util-row">
+            <div class="util-main">
+              <p class="util-title">Centre antipoison</p>
+              <p class="util-sub">À compléter plus tard</p>
+            </div>
+            <div class="util-action">
+              <a class="btn-secondary" href="#">À venir</a>
+            </div>
+          </div>
+
+          <div class="util-row">
+            <div class="util-main">
+              <p class="util-title">Électricité</p>
+              <p class="util-sub">Numéro et référence contrat à compléter</p>
+            </div>
+            <div class="util-action">
+              <a class="btn-secondary" href="#">À venir</a>
+            </div>
+          </div>
+
+          <div class="util-row">
+            <div class="util-main">
+              <p class="util-title">Eau</p>
+              <p class="util-sub">Numéro et référence contrat à compléter</p>
+            </div>
+            <div class="util-action">
+              <a class="btn-secondary" href="#">À venir</a>
+            </div>
+          </div>
+
+          <div class="util-row">
+            <div class="util-main">
+              <p class="util-title">Gaz</p>
+              <p class="util-sub">Numéro à compléter</p>
+            </div>
+            <div class="util-action">
+              <a class="btn-secondary" href="#">À venir</a>
+            </div>
+          </div>
+
+          <div class="util-row">
+            <div class="util-main">
+              <p class="util-title">PMI</p>
+              <p class="util-sub">Coordonnées à compléter</p>
+            </div>
+            <div class="util-action">
+              <a class="btn-secondary" href="#">À venir</a>
+            </div>
+          </div>
+
+          <div class="util-row">
+            <div class="util-main">
+              <p class="util-title">Pharmacie de garde</p>
+              <p class="util-sub">À compléter plus tard</p>
+            </div>
+            <div class="util-action">
+              <a class="btn-secondary" href="#">À venir</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Outil urgence Assist'Mat</h2>
+      </div>
+      <div class="section-body">
+        <div class="tool-box">
+          <p>
+            Cette page servira de passerelle vers le futur outil urgence Assist'Mat, avec les contenus détaillés, personnalisés et évolutifs.
+          </p>
+
+          <div class="footer-actions">
+            <a class="btn-main" href="#">
+              Ouvrir le futur outil urgence Assist'Mat
+            </a>
+
+            <a class="btn-secondary" href="/">
+              Retour à l’accueil
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
