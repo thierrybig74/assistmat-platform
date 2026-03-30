@@ -1133,6 +1133,24 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 
 
 
+.btn-back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1;
+  white-space: nowrap;
+}
+.btn-back-home svg {
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -1150,6 +1168,10 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
     <div class="module-header-row">
       <div class="section-title section-title-neutral" style="margin-bottom:0">&nbsp;</div>
       <div style="display:flex;gap:8px;align-items:center">
+        <a href="/" class="btn-back-home">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          <span>Accueil</span>
+        </a>
         <button type="button" class="btn btn-ghost" id="sheetMainBtn">🧾 Fiche</button>
         
       </div>
@@ -1474,6 +1496,10 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       <div class="duration-header-row">
         <div class="section-title section-title-neutral" style="margin-bottom:0">&nbsp;</div>
         <div class="duration-header-actions">
+          <a href="/" class="btn-back-home">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            <span>Accueil</span>
+          </a>
           <button type="button" class="btn btn-ghost" id="sheetDurationBtn">🧾 Fiche</button>
           
         </div>
