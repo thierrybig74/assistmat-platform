@@ -123,6 +123,7 @@
       box-shadow:
         0 2px 0 rgba(0,0,0,.06),
         0 1px 0 rgba(255,255,255,.8) inset;
+      cursor:pointer;
     }
 
     .btn-primary{
@@ -169,6 +170,13 @@
       font-size:20px;
       font-weight:900;
     }
+
+    .cloud-status{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:.92rem;
+      word-break:break-word;
+    }
   </style>
 </head>
 
@@ -202,6 +210,13 @@
           <a class="btn" href="/simulateur/">Ouvrir</a>
         </div>
 
+        <div class="tool-card">
+          <h2>Cloud</h2>
+          <p>Connexion Firebase et test d’écriture dans la structure réelle.</p>
+          <button id="btn-google-login" class="btn btn-primary" type="button">Connexion Google</button>
+          <p id="cloud-status" class="cloud-status">Non connecté</p>
+        </div>
+
       </div>
 
       <div class="home-footer">
@@ -215,23 +230,57 @@
     <span class="btn-urgence-cross">✚</span>
     Urgence
   </a>
-<script type="module">
-  import { db, collection, addDoc } from "/core/firebase.js";
 
-  async function testFirestore() {
-    try {
-      const docRef = await addDoc(collection(db, "test"), {
-        message: "Hello Firebase 🔥",
-        date: new Date().toISOString()
-      });
+  <script type="module">
+    import { db } from "/core/firebase.js";
+    import { loginWithGoogle, watchAuth } from "/core/auth.js";
+    import {
+      doc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-      console.log("✅ Document écrit :", docRef.id);
-    } catch (e) {
-      console.error("❌ Erreur :", e);
+    const status = document.getElementById("cloud-status");
+    const btn = document.getElementById("btn-google-login");
+
+    async function writeMetaState(uid) {
+      const ref = doc(db, "users", uid, "apps", "assistmat", "meta", "state");
+
+      await setDoc(ref, {
+        schemaVersion: 1,
+        appVersion: "0.1.0",
+        cloudEnabled: true,
+        lastTestAt: new Date().toISOString(),
+        source: "index.html"
+      }, { merge: true });
     }
-  }
 
-  testFirestore();
-</script>
+    btn.addEventListener("click", async () => {
+      status.textContent = "Connexion en cours...";
+      try {
+        await loginWithGoogle();
+      } catch (e) {
+        console.error("Erreur connexion Google :", e);
+        status.textContent = "Erreur connexion";
+      }
+    });
+
+    watchAuth(async (user) => {
+      if (!user) {
+        status.textContent = "Non connecté";
+        return;
+      }
+
+      status.textContent = "Connecté : " + user.email;
+
+      try {
+        await writeMetaState(user.uid);
+        status.textContent = "Connecté : " + user.email + " | écrit cloud OK";
+        console.log("✅ meta/state écrit pour uid =", user.uid);
+      } catch (e) {
+        console.error("Erreur écriture meta/state :", e);
+        status.textContent = "Connecté : " + user.email + " | erreur écriture cloud";
+      }
+    });
+  </script>
 </body>
 </html>
