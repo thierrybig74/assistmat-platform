@@ -707,6 +707,99 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   flex:0 0 auto;
   box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
 }
+
+.app-notif-overlay{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  background:rgba(20,18,16,.38);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.app-notif{
+  width:min(92vw, 460px);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:0 18px 42px rgba(0,0,0,.22);
+  overflow:hidden;
+}
+.app-notif-head{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:16px 16px 10px;
+}
+.app-notif-icon{
+  flex:0 0 auto;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.05rem;
+  font-weight:800;
+}
+.app-notif.error .app-notif-icon{
+  background:#fff1f1;
+  color:#b52020;
+}
+.app-notif.warning .app-notif-icon{
+  background:#fff7e8;
+  color:#b86b00;
+}
+.app-notif.info .app-notif-icon{
+  background:#ebf2f9;
+  color:#2b5c8a;
+}
+.app-notif-body{
+  padding:0 16px 16px;
+}
+.app-notif-title{
+  font-size:1rem;
+  font-weight:800;
+  color:var(--text);
+  line-height:1.2;
+}
+.app-notif-message{
+  margin-top:6px;
+  font-size:.9rem;
+  color:var(--text2);
+  line-height:1.45;
+  white-space:pre-line;
+}
+.app-notif-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:0 16px 16px;
+}
+.app-notif-actions .btn{
+  min-height:40px;
+  padding:8px 14px;
+}
+.contract-year-help-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:18px;
+  height:18px;
+  margin-left:6px;
+  border-radius:999px;
+  border:1px solid var(--accentBd);
+  background:var(--accentBg);
+  color:var(--accent);
+  font-size:.68rem;
+  font-weight:800;
+  vertical-align:middle;
+  cursor:pointer;
+  line-height:1;
+}
+
 .sim-toast{
   position:fixed;
   left:50%;
@@ -1447,7 +1540,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
     <div class="rate-chips-row">
       <span class="pill pill-accent"><strong>Brut :</strong><span id="grossRateChip">0,0000 €</span></span>
       <span class="pill pill-accent"><strong>Net :</strong><span id="netRateChip">0,0000 €</span></span>
-      <span class="pill pill-accent"><strong>Année :</strong><span id="contractYearChip">INCOMPLETE</span></span>
+      <span class="pill pill-accent"><strong>Année :</strong><span id="contractYearChip">INCOMPLETE</span><button type="button" id="contractYearHelpBtn" class="contract-year-help-btn" aria-label="Comprendre la règle des semaines">?</button></span>
     </div>
   </div>
 
@@ -1965,6 +2058,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 
 
 <div class="sim-toast" id="simToast"></div>
+<div id="appNotifRoot"></div>
 
 <dialog id="simBackupHelpDialog">
   <div class="modal">
@@ -2147,6 +2241,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   const simImportFromFileBtn = document.getElementById("simImportFromFileBtn");
   const simImportCloseBtn = document.getElementById("simImportCloseBtn");
   const simToast = document.getElementById("simToast");
+  const appNotifRoot = document.getElementById("appNotifRoot");
+  const contractYearHelpBtn = document.getElementById("contractYearHelpBtn");
   const simBackupFileInput = document.getElementById("simBackupFileInput");
   const sheetMainView = document.getElementById("sheetMainView");
   const sheetMainTitleEl = document.getElementById("sheetMainTitle");
@@ -2670,45 +2766,76 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       annualDays += w.annualDays;
     });
 
-    const contractYear = totalWeeks < 47 ? "INCOMPLETE" : "COMPLETE";
-    q("#contractYearChip").textContent = contractYear;
-    q("#contractYear").textContent = contractYear;
-    q("#annualWeeks").textContent = `${totalWeeks} sem`;
-    q("#monthlyWeeks").textContent = totalWeeks;
-    q("#annualNormal").textContent = `${fmt(annualNormal,2)} hrs`;
-    q("#annualMajor").textContent = `${fmt(annualMajor,2)} hrs`;
-    q("#annualDays").textContent = `${annualDays} jrs`;
+    let contractYear = "";
+const invalidWeeksRange = totalWeeks >= 47 && totalWeeks <= 51;
 
-    const d = Number(decimalsEl.value || 4);
-    const monthlyDays = annualDays / 12;
-    const overtimeMode = overtimeModeSelect.value;
-    const monthlyNormalHours = overtimeMode === "majoree" ? (annualNormal / 12) : ((annualNormal + annualMajor) / 12);
-    const monthlyMajorHours = overtimeMode === "majoree" ? (annualMajor / 12) : 0;
+if (totalWeeks <= 46) {
+  contractYear = "INCOMPLETE";
+} else if (totalWeeks === 52) {
+  contractYear = "COMPLETE";
+} else if (invalidWeeksRange) {
+  contractYear = "NON AUTORISÉ";
+} else {
+  contractYear = "";
+}
 
-    q("#monthlyDays").textContent = `${fmt(monthlyDays,2)} jrs`;
-    q("#monthlyNormal").textContent = `${fmt(monthlyNormalHours,d)} hrs`;
-    q("#monthlyMajor").textContent = `${fmt(monthlyMajorHours,d)} hrs`;
-    monthlyMajorRow.classList.toggle("hidden", overtimeMode !== "majoree");
+q("#contractYearChip").textContent = contractYear || "—";
+q("#contractYear").textContent = contractYear || "—";
+q("#annualWeeks").textContent = `${totalWeeks} sem`;
+q("#monthlyWeeks").textContent = totalWeeks;
+q("#annualNormal").textContent = `${fmt(annualNormal,2)} hrs`;
+q("#annualMajor").textContent = `${fmt(annualMajor,2)} hrs`;
+q("#annualDays").textContent = `${annualDays} jrs`;
 
-    const majorPct = Number(majorationRateEl.value || 25) / 100;
-    const grossMajorRate = rate.brut * (1 + majorPct);
-    const monthlyGross = overtimeMode === "majoree"
-      ? (monthlyNormalHours * rate.brut) + (monthlyMajorHours * grossMajorRate)
-      : (monthlyNormalHours * rate.brut);
+if (invalidWeeksRange) {
+  if (!recalcAll._invalidWeeksNotifShown) {
+    showWeeksRuleNotification("error");
+    recalcAll._invalidWeeksNotifShown = true;
+  }
 
-    const monthlyNetBefore = monthlyGross * rate.coeff;
-    const hsExEnabled = (hsExemptionEnabledEl?.value || "1") === "1";
-    const hsExRate = Number((hsExemptionRateEl?.value || "0.1131").replace(",", "."));
-    const monthlyExemption = (hsExEnabled && overtimeMode === "majoree")
-      ? (monthlyMajorHours * rate.brut * (1 + majorPct) * (Number.isFinite(hsExRate) ? hsExRate : 0.1131))
-      : 0;
-    const monthlyNet = monthlyNetBefore + monthlyExemption;
+  q("#monthlyDays").textContent = "—";
+  q("#monthlyNormal").textContent = "—";
+  q("#monthlyMajor").textContent = "—";
+  q("#monthlyGrossSalary").textContent = "Mensualisation impossible";
+  q("#monthlyNetBefore").textContent = "Mensualisation impossible";
+  q("#monthlyExemption").textContent = "—";
+  q("#monthlyNet").textContent = "Mensualisation impossible";
+  monthlyMajorRow.classList.toggle("hidden", false);
+  declaredDaysEl.value = "";
+  return;
+} else {
+  recalcAll._invalidWeeksNotifShown = false;
+}
+const d = Number(decimalsEl.value || 4);
+const monthlyDays = annualDays / 12;
+const overtimeMode = overtimeModeSelect.value;
+const monthlyNormalHours = overtimeMode === "majoree" ? (annualNormal / 12) : ((annualNormal + annualMajor) / 12);
+const monthlyMajorHours = overtimeMode === "majoree" ? (annualMajor / 12) : 0;
 
-    q("#monthlyGrossSalary").textContent = `${fmt(monthlyGross,2)} €`;
-    q("#monthlyNetBefore").textContent = `${fmt(monthlyNetBefore,2)} €`;
-    q("#monthlyExemption").textContent = `${fmt(monthlyExemption,2)} €`;
-    q("#monthlyNet").textContent = `${fmt(monthlyNet,2)} €`;
-    declaredDaysEl.value = String(Math.ceil(monthlyDays || 0));
+q("#monthlyDays").textContent = `${fmt(monthlyDays,2)} jrs`;
+q("#monthlyNormal").textContent = `${fmt(monthlyNormalHours,d)} hrs`;
+q("#monthlyMajor").textContent = `${fmt(monthlyMajorHours,d)} hrs`;
+monthlyMajorRow.classList.toggle("hidden", overtimeMode !== "majoree");
+
+const majorPct = Number(majorationRateEl.value || 25) / 100;
+const grossMajorRate = rate.brut * (1 + majorPct);
+const monthlyGross = overtimeMode === "majoree"
+  ? (monthlyNormalHours * rate.brut) + (monthlyMajorHours * grossMajorRate)
+  : (monthlyNormalHours * rate.brut);
+
+const monthlyNetBefore = monthlyGross * rate.coeff;
+const hsExEnabled = (hsExemptionEnabledEl?.value || "1") === "1";
+const hsExRate = Number((hsExemptionRateEl?.value || "0.1131").replace(",", "."));
+const monthlyExemption = (hsExEnabled && overtimeMode === "majoree")
+  ? (monthlyMajorHours * rate.brut * (1 + majorPct) * (Number.isFinite(hsExRate) ? hsExRate : 0.1131))
+  : 0;
+const monthlyNet = monthlyNetBefore + monthlyExemption;
+
+q("#monthlyGrossSalary").textContent = `${fmt(monthlyGross,2)} €`;
+q("#monthlyNetBefore").textContent = `${fmt(monthlyNetBefore,2)} €`;
+q("#monthlyExemption").textContent = `${fmt(monthlyExemption,2)} €`;
+q("#monthlyNet").textContent = `${fmt(monthlyNet,2)} €`;
+declaredDaysEl.value = String(Math.ceil(monthlyDays || 0));
   }
 
   function renderWeeks(){
@@ -3939,6 +4066,49 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   }
 
 
+  function closeAppNotification(){
+    const overlay = document.getElementById("app-notif-overlay");
+    if(overlay) overlay.remove();
+  }
+
+  function showAppNotification({ type = "info", title = "", message = "", buttonLabel = "Compris" } = {}){
+    if(!appNotifRoot) return;
+    closeAppNotification();
+
+    const icon = type === "error" ? "!" : (type === "warning" ? "?" : "i");
+    const overlay = document.createElement("div");
+    overlay.id = "app-notif-overlay";
+    overlay.className = "app-notif-overlay";
+    overlay.innerHTML = `
+      <div class="app-notif ${type}" role="alertdialog" aria-modal="true" aria-labelledby="appNotifTitle">
+        <div class="app-notif-head">
+          <div class="app-notif-icon">${icon}</div>
+          <div style="min-width:0">
+            <div class="app-notif-title" id="appNotifTitle">${esc(title)}</div>
+            <div class="app-notif-message">${esc(message)}</div>
+          </div>
+        </div>
+        <div class="app-notif-actions">
+          <button type="button" class="btn btn-ghost" id="appNotifCloseBtn">${esc(buttonLabel)}</button>
+        </div>
+      </div>
+    `;
+    overlay.addEventListener("click", (e) => {
+      if(e.target === overlay) closeAppNotification();
+    });
+    appNotifRoot.appendChild(overlay);
+    q("#appNotifCloseBtn", overlay)?.addEventListener("click", closeAppNotification);
+  }
+
+  function showWeeksRuleNotification(type = "info"){
+    showAppNotification({
+      type,
+      title: type === "error" ? "Mensualisation impossible" : "Règle des semaines",
+      message: "Une mensualisation ne peut pas être comprise entre 47 et 51 semaines.\n\n• 46 semaines ou moins : année incomplète\n• 52 semaines : année complète",
+      buttonLabel: "Compris"
+    });
+  }
+
   function simShowToast(message, duration=2200){
     if(!simToast) return;
     simToast.textContent = message;
@@ -4461,6 +4631,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   bindIdentityToggle(toggleLinksMain, 'links');
   bindIdentityToggle(toggleLinksDur, 'links');
   bindSectionToggles();
+
+  if(contractYearHelpBtn) contractYearHelpBtn.addEventListener('click', () => showWeeksRuleNotification("info"));
 
   for(const pair of [
     ['childFirstName','childFirstNameDur'],
