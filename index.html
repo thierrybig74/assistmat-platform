@@ -215,6 +215,23 @@
     <span class="btn-urgence-cross">✚</span>
     Urgence
   </a>
+<script type="module">
+  import { db, collection, addDoc } from "/core/firebase.js";
 
+  async function testFirestore() {
+    try {
+      const docRef = await addDoc(collection(db, "test"), {
+        message: "Hello Firebase 🔥",
+        date: new Date().toISOString()
+      });
+
+      console.log("✅ Document écrit :", docRef.id);
+    } catch (e) {
+      console.error("❌ Erreur :", e);
+    }
+  }
+
+  testFirestore();
+</script>
 </body>
 </html>
